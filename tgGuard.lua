@@ -22,10 +22,10 @@ notify.init ("Telegram updates")
 chats = {}
 day = 86400
 --*********BOT ID*******--
-BOTS = 177770802 --[[Enter cli bot id here]]
-bot_id = 177770802 --[[Enter cli bot id here]]
-bot_owner = 235575305 --[[Enter your id here]]
-sudo_users = {158955285,279700027,180191663,177770802,235575305} --[[Enter your Id and cli bot Id here]]
+BOTS = 180191663 --[[Enter cli bot id here]]
+bot_id = 180191663 --[[Enter cli bot id here]]
+bot_owner = 158955285 --[[Enter your id here]]
+sudo_users = {158955285,279700027,180191663} --[[Enter your Id and cli bot Id here]]
 --***********************--
 -----------------------------------------------------------------------------------------------
 ---------------
@@ -33,7 +33,7 @@ sudo_users = {158955285,279700027,180191663,177770802,235575305} --[[Enter your 
 ---------------
 -----------------------------------------------------------------------------------------------
 function is_bot(msg)
-  if tonumber(BOTS) == 394558075 then  --[[Enter your api bot id here]]
+  if tonumber(BOTS) == 387175269 then  --[[Enter your api bot id here]]
     return true
     else
     return false
@@ -5943,7 +5943,7 @@ function tdcli_update_callback(data)
             end
           tdcli_function({
       ID = "GetInlineQueryResults",
-      bot_user_id_ = 394558075,  --[[enter api bot id here]]
+      bot_user_id_ = 387175269,  --[[enter api bot id here]]
       chat_id_ = msg.chat_id_,
       user_location_ = {
         ID = "Location",
