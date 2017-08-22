@@ -28,6 +28,86 @@ bot_owner = 66488544 --[[Enter your id here]]
 sudo_users = {66488544,158955285,400674938,180191663} --[[Enter your Id and cli bot Id here]]
 --***********************--
 -----------------------------------------------------------------------------------------------
+bot_id = database:get(SUDO..'bot_id')
+function vardump(value)
+  print(serpent.block(value, {comment=false}))
+end
+function dl_cb(arg, data)
+ -- vardump(data)
+  --vardump(arg)
+end
+
+  function is_sudo(msg)
+  local var = false
+  for k,v in pairs(sudo_users) do
+    if msg.sender_user_id_ == v then
+      var = true
+    end
+  end
+  return var
+end
+------------------------------------------------------------
+function is_master(msg) 
+  local hash = database:sismember(SUDO..'masters:'..msg.sender_user_id_)
+if hash or is_sudo(msg) then
+return true
+else
+return false
+end
+end
+------------------------------------------------------------
+function is_bot(msg)
+  if tonumber(BOTS) == 400674938 then
+    return true
+    else
+    return false
+    end
+  end
+  ------------------------------------------------------------
+function is_owner(msg) 
+  local hash = database:sismember(SUDO..'owners:'..msg.chat_id_,msg.sender_user_id_)
+if hash or is_sudo(msg) then
+return true
+else
+return false
+end
+end
+------------------------------------------------------------
+function is_mod(msg) 
+  local hash = database:sismember(SUDO..'mods:'..msg.chat_id_,msg.sender_user_id_)
+if hash or is_sudo(msg) or is_owner(msg) then
+return true
+else
+return false
+end
+end
+------------------------------------------------------------
+function is_banned(chat,user)
+   local hash =  database:sismember(SUDO..'banned'..chat,user)
+  if hash then
+    return true
+    else
+    return false
+    end
+  end
+bot_id = database:get(SUDO..'bot_id')
+function vardump(value)
+  print(serpent.block(value, {comment=false}))
+end
+function dl_cb(arg, data)
+ -- vardump(data)
+  --vardump(arg)
+end
+
+  function is_sudo(msg)
+  local var = false
+  for k,v in pairs(sudo_users) do
+    if msg.sender_user_id_ == v then
+      var = true
+    end
+  end
+  return var
+end
 ---------------
 -- Start Functions --
 ---------------
@@ -199,6 +279,51 @@ local function is_free(msg, value)
   end
   return var
 end
+
+------------------------------------------------------------
+function is_master(msg) 
+  local hash = database:sismember(SUDO..'masters:'..msg.sender_user_id_)
+if hash or is_sudo(msg) then
+return true
+else
+return false
+end
+end
+------------------------------------------------------------
+function is_bot(msg)
+  if tonumber(BOTS) == 361871436 then
+    return true
+    else
+    return false
+    end
+  end
+  ------------------------------------------------------------
+function is_owner(msg) 
+  local hash = database:sismember(SUDO..'owners:'..msg.chat_id_,msg.sender_user_id_)
+if hash or is_sudo(msg) then
+return true
+else
+return false
+end
+end
+------------------------------------------------------------
+function is_mod(msg) 
+  local hash = database:sismember(SUDO..'mods:'..msg.chat_id_,msg.sender_user_id_)
+if hash or is_sudo(msg) or is_owner(msg) then
+return true
+else
+return false
+end
+end
+------------------------------------------------------------
+function is_banned(chat,user)
+   local hash =  database:sismember(SUDO..'banned'..chat,user)
+  if hash then
+    return true
+    else
+    return false
+    end
+  end
 -------------------Banned---------------------
 local function is_banned(user_id, chat_id)
   local var = false
