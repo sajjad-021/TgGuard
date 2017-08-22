@@ -3,6 +3,20 @@
 THIS_DIR=$(cd $(dirname $0); pwd)
 cd $THIS_DIR
 
+luarocks_version=2.4.2
+
+lualibs=(
+'oauth'
+'lua-cjson'
+'ansicolors'
+'luasec'
+'https://luarocks.org/luasec-0.6-1.rockspec'
+'lub'
+'luaexpat'
+'redis-lua'
+'serpent'
+)
+
 logo() {
     declare -A logo
     seconds="0.004"
@@ -37,28 +51,6 @@ log() {
             echo -e "\033[38;5;129m,_-_-\.\033[0;00m"
  }
 
-install_luarocks() {
- echo -e "\e[38;5;142mInstalling LuaRocks\e"
-  git clone https://github.com/keplerproject/luarocks.git
-  cd luarocks
-  git checkout tags/v2.4.2 # Current stable
-
-  PREFIX="$THIS_DIR/.luarocks"
-
-  ./configure --prefix=$PREFIX --sysconfdir=$PREFIX/luarocks --force-config
-   make build && make install
-cd ..
-  rm -rf luarocks
-}
-
-install_rocks() {
-echo -e "\e[38;5;105mInstall rocks service\e"
-rocks="luasocket luasec redis-lua lua-term serpent dkjson Lua-cURL multipart-post lanes xml fakeredis luaexpat luasec lbase64 luafilesystem lub lua-cjson feedparser serpent"
-    for rock in $rocks; do
-      ./.luarocks/bin/luarocks install $rock
-    done
-}
-  
 tg() {
 echo -e "\e[38;5;099minstall telegram-cli\e"
     rm -rf ../.telegram-cli
@@ -66,21 +58,54 @@ echo -e "\e[38;5;099minstall telegram-cli\e"
     mv telegram-cli-1222 telegram-cli
     chmod +x telegram-cli
 }
-  
-install2() {
-echo -e "\e[38;5;034mInstalling more dependencies\e"
-    sudo apt-get install screen -y
-    sudo apt-get install tmux -y
-    sudo apt-get install upstart -y
-    sudo apt-get install libstdc++6 -y
-    sudo apt-get install lua-lgi -y
-    sudo apt-get install libnotify-dev -y
+
+make_progress() {
+exe=`lua <<-EOF
+    print(tonumber($1)/tonumber($2)*100)
+EOF
+`
+    echo ${exe:0:4}
 }
 
-py() {
- sudo apt-get install python-setuptools python-dev build-essential 
- sudo easy_install pip
- sudo pip install redis
+install2() {
+echo -e "\e[38;5;034mInstalling more dependencies\e"
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; sudo apt-get -y upgrade; sudo apt-get -y update
+  sudo apt-get install git redis-server libreadline-dev -y libconfig-dev -y lua-socket -y lua-sec -y lua-expat -y libevent-dev -y libconfig8-dev libjansson-dev lua5.2 liblua5.2-dev lua-lgi glib-2.0 libnotify-dev libssl-dev libssl1.0.0 make libstdc++6 g++-4.9 unzip autoconf g++ -y libpython-dev -y expat libexpat1-dev -y libreadline-gplv2-dev libreadline5-dev tmux -y
+ sudo apt-get install lua5.1 luarocks lua-socket lua-sec redis-server curl
+}
+
+function download_libs_lua() {
+    if [[ ! -d ".logs" ]]; then mkdir .logs; fi
+    if [[ -f ".logs/logluarocks_${today}.txt" ]]; then rm .logs/logluarocks_${today}.txt; fi
+    local i
+    for ((i=0;i<${#lualibs[@]};i++)); do
+        printf "\r\33[2K"
+        printf "\rtgAds: wait... [`make_progress $(($i+1)) ${#lualibs[@]}`%%] [$(($i+1))/${#lualibs[@]}] ${lualibs[$i]}"
+        sudo ./.luarocks/bin/luarocks install ${lualibs[$i]} &>> .logs/logluarocks_${today}.txt
+    done
+    sleep 0.2
+    printf "\nLogfile created: $PWD/.logs/logluarocks_${today}.txt\nDone\n"
+    rm -rf luarocks-2.2.2*
+}
+
+function configure() {
+    dir=$PWD
+    wget http://luarocks.org/releases/luarocks-${luarocks_version}.tar.gz &>/dev/null
+    tar zxpf luarocks-${luarocks_version}.tar.gz &>/dev/null
+    cd luarocks-${luarocks_version}
+    if [[ ${1} == "--no-null" ]]; then
+        ./configure --prefix=$dir/.luarocks --sysconfdir=$dir/.luarocks/luarocks --force-config
+        make bootstrap
+    else
+        ./configure --prefix=$dir/.luarocks --sysconfdir=$dir/.luarocks/luarocks --force-config &>/dev/null
+        make bootstrap &>/dev/null
+    fi
+    cd ..; rm -rf luarocks*
+    for ((i=0;i<101;i++)); do
+        printf "\rConfiguring... [%i%%]" $i
+        sleep 0.007
+    done
+    printf "\nDone\n"
 }
 
 install() {
@@ -89,15 +114,9 @@ echo -e "\e[38;5;035mUpdating packages\e"
    sudo apt-get upgrade -y
 
 echo -e "\\e[38;5;129mInstalling dependencies\e"
-	sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-	sudo apt-get install g++-4.7 -y c++-4.7 -y
-	sudo apt-get install libreadline-dev -y libconfig-dev -y libssl-dev -y lua5.2 -y liblua5.2-dev -y lua-socket -y lua-sec -y lua-expat -y libevent-dev -y make unzip git redis-server autoconf g++ -y libjansson-dev -y libpython-dev -y expat libexpat1-dev -y
 install2
-install_luarocks
-install_rocks
-py
-tg
-log
+configure
+sudo apt -u update && sudo apt -y upgrade && sudo apt -y autoclean && sudo apt -y 
 echo -e "\e[38;5;046mInstalling packages successfully\033[0;00m"
 }
 
