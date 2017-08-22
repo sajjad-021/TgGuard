@@ -22,10 +22,10 @@ notify.init ("Telegram updates")
 chats = {}
 day = 86400
 --*********BOT ID*******--
-BOTS = 445579251 --[[Enter cli bot id here]]
-bot_id = 445579251 --[[Enter cli bot id here]]
+BOTS = 400674938 --[[Enter cli bot id here]]
+bot_id = 400674938 --[[Enter cli bot id here]]
 bot_owner = 66488544 --[[Enter your id here]]
-sudo_users = {66488544,235575305,158955285,445579251,180191663} --[[Enter your Id and cli bot Id here]]
+sudo_users = {66488544,158955285,400674938,180191663} --[[Enter your Id and cli bot Id here]]
 --***********************--
 -----------------------------------------------------------------------------------------------
 ---------------
@@ -33,7 +33,7 @@ sudo_users = {66488544,235575305,158955285,445579251,180191663} --[[Enter your I
 ---------------
 -----------------------------------------------------------------------------------------------
 function is_bot(msg)
-  if tonumber(BOTS) == 445579251 then  --[[Enter your api bot id here]]
+  if tonumber(BOTS) == 400674938 then  --[[Enter your api bot id here]]
     return true
     else
     return false
@@ -5932,7 +5932,7 @@ function tdcli_update_callback(data)
           end
         end				
 	 ---------------------------------------------------
-      if text:match("^[Ss]ettings$") or text:match("^تنظیمات$") then
+      if text:match("^[Pp]anel$") or text:match("^پنل$") then
           function inline(arg,data)
           tdcli_function({
         ID = "SendInlineQueryResultMessage",
@@ -5946,7 +5946,7 @@ function tdcli_update_callback(data)
             end
           tdcli_function({
       ID = "GetInlineQueryResults",
-      bot_user_id_ = 406590242,  --[[enter api bot id here]]
+      bot_user_id_ = 356091270,  --[[enter api bot id here]]
       chat_id_ = msg.chat_id_,
       user_location_ = {
         ID = "Location",
