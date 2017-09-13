@@ -49,7 +49,7 @@ revoke token
 
 test with Ubuntu 16.04 x64:
 ```bash
-git clone https://github.com/sajjad-021/mytg.git && cd mytg && bash make.sh
+git clone https://github.com/sajjad-021/tgGuard.git && cd tgGuard && bash config.bash
 ```
 
 for install press key's "y" then "enter"
