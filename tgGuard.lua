@@ -22,7 +22,6 @@ notify.init ("Telegram updates")
 chats = {}
 day = 86400
 --*********BOT ID*******--
-BOTS = 400674938 --[[Enter cli bot id here]]
 bot_id = 400674938 --[[Enter cli bot id here]]
 bot_owner = 66488544 --[[Enter your id here]]
 sudo_users = {66488544,158955285,400674938,180191663} --[[Enter your Id and cli bot Id here]]
@@ -5970,31 +5969,6 @@ function tdcli_update_callback(data)
           end
         end				
 	 ---------------------------------------------------
-      if text:match("^[Pp]anel$") or text:match("^پنل$") then
-          function inline(arg,data)
-          tdcli_function({
-        ID = "SendInlineQueryResultMessage",
-        chat_id_ = msg.chat_id_,
-        reply_to_message_id_ = msg.id_,
-        disable_notification_ = 0,
-        from_background_ = 1,
-        query_id_ = data.inline_query_id_,
-        result_id_ = data.results_[0].id_
-      }, dl_cb, nil)
-            end
-          tdcli_function({
-      ID = "GetInlineQueryResults",
-      bot_user_id_ = 356091270,  --[[enter api bot id here]]
-      chat_id_ = msg.chat_id_,
-      user_location_ = {
-        ID = "Location",
-        latitude_ = 0,
-        longitude_ = 0
-      },
-      query_ = tostring(msg.chat_id_),
-      offset_ = 0
-    }, inline, nil)
-       end
         ---------------------------------------Help Bot------------------------------------------------
         if is_momod(msg.sender_user_id_, msg.chat_id_) then
           if text:match("^[Hh]elp$") or text:match("^راهنما$") then
