@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 THIS_DIR=$(cd $(dirname $0); pwd)
 cd $THIS_DIR
@@ -30,15 +30,18 @@ tgcli_version=1222
 luarocks_version=2.4.2
 
 lualibs=(
-'oauth'
-'lua-cjson'
-'ansicolors'
 'luasec'
-'https://luarocks.org/luasec-0.6-1.rockspec'
+'luarepl'
+'lbase64 20120807-3'
+'luafilesystem'
 'lub'
-'dkjson'
 'luaexpat'
 'redis-lua'
+'lua-cjson'
+'fakeredis'
+'xml'
+'dkjson'
+'feedparser'
 'serpent'
 )
 
@@ -85,24 +88,23 @@ function download_libs_lua() {
 }
 
 function update() {
-  sudo git pull
-  sudo git fetch --all
-  sudo git reset --hard origin/master
-  sudo git pull origin master
-  sudo chmod +x TG
-}
-
-tg() {
- wget --progress=bar:force https://valtman.name/files/telegram-cli-${tgcli_version} 2>&1 | get_sub
-        mv telegram-cli-${tgcli_version} telegram-cli; chmod +x telegram-cli
+  git pull
+  git fetch --all
+  git reset --hard origin/master
+  git pull origin master
+  chmod +x TG
 }
 
 function configure() {
     if [[ -f "/usr/bin/lua5.3" ]] || [[ -f "/usr/bin/lua5.1" ]] || [[ -f "/usr/local/bin/lua5.3" ]]; then
     	sudo apt remove -y lua5.3
-        echo -e "\033[0;31mplease wait...\033[0m\n"
+	sudo apt -y autoremove
+	sudo apt install -y lua5.2
+        echo -e "\033[0;31mError\033[0m":\
+        "tgAds ins't working with lua5.3 and others versions, the packages must be removed,"\
+        "please remove them, reinstall lua5.2 and run \033[0;31mbash TG\033[0m again."
      fi
-    dir=$HOME
+    dir=$PWD
     wget http://luarocks.org/releases/luarocks-${luarocks_version}.tar.gz &>/dev/null
     tar zxpf luarocks-${luarocks_version}.tar.gz &>/dev/null
     cd luarocks-${luarocks_version}
@@ -116,6 +118,8 @@ function configure() {
     cd ..; rm -rf luarocks*
     if [[ ${1} != "--no-download" ]]; then
         download_libs_lua
+        wget --progress=bar:force https://valtman.name/files/telegram-cli-${tgcli_version} 2>&1 | get_sub
+        mv telegram-cli-${tgcli_version} telegram-cli; chmod +x telegram-cli
     fi
     for ((i=0;i<101;i++)); do
         printf "\rConfiguring... [%i%%]" $i
@@ -125,8 +129,8 @@ function configure() {
 }
 
 install() {
-    sudo chmod +x config.bash
- sudo apt update -y && apt upgrade -y
+    sudo chmod 777 TG
+sudo apt update -y && sudo apt upgrade -y
   sudo apt-get install -f
 	sudo dpkg -a --configure
 	sudo apt-get dist-upgrade
@@ -138,7 +142,6 @@ install() {
 rm -rf README.md
     configure ${2}    
    rm -rf logs
-tg
   sudo apt -y autoremove
   sudo service redis-server restart
   sudo service redis-server start
@@ -147,7 +150,7 @@ tg
 conf() {
 AP="$THIS_DIR"/start.sh
 if [ ! -f $AP ]; then
-    echo "#!/usr/bin/env
+    echo "#!/bin/bash
      while true; do
        sudo tmux kill-session -t tgGuard
 		sudo tmux new-session -s tgGuard "./telegram-cli --disable-link-preview -R -C -v -s tgGuard.lua -I -l 1 -E -p tgGuard -L log.txt"
