@@ -144,16 +144,29 @@ tg
   sudo service redis-server start
 }
 
-start() {
-  while true; do
+conf() {
+AP="$THIS_DIR"/start.sh
+if [ ! -f $AP ]; then
+    echo "#!/usr/bin/env
+     while true; do
        sudo tmux kill-session -t tgGuard
 		sudo tmux new-session -s tgGuard "./telegram-cli --disable-link-preview -R -C -v -s tgGuard.lua -I -l 1 -E -p tgGuard -L log.txt"
         sudo tmux detach -s tgGuard
+	done" >> start.sh
+	chmod 777 start.sh
+fi
+}
+
+
+start() {
+while true; do
+	sudo screen -S nohup ./start.sh
 done
 }
 
 if [ ! -f "telegram-cli" ]; then
     install
-	else
-    start
+    conf
+else
+   start
 fi
