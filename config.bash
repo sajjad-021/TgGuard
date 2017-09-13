@@ -147,6 +147,10 @@ rm -rf README.md
   sudo service redis-server start
 }
 
+if [ "$1" = "upgrade" ]; then
+update
+fi
+
 conf() {
 AP="$THIS_DIR"/start.sh
 if [ ! -f $AP ]; then
@@ -159,7 +163,6 @@ if [ ! -f $AP ]; then
 	chmod 777 start.sh
 fi
 }
-
 
 start() {
 while true; do
