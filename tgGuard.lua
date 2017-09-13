@@ -3,7 +3,7 @@ package.cpath = package.cpath..';.luarocks/lib/lua/5.2/?.so'
 
 -------------------------
 ltn12=require("ltn12")
-json = dofile('JSON.lua')
+json = require('dkjson')
 URL = require "socket.url"
 serpent = require("serpent")
 http = require "socket.http"
