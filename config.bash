@@ -194,6 +194,7 @@ if [ "$REPLY" == "a" ] || [ "$REPLY" == "A" ]; then
     elif [ "$REPLY" == "c" ] || [ "$REPLY" == "C" ]; then
 	cli
 fi
+fi
 }
 
 if [ "$1" = "upgrade" ]; then
