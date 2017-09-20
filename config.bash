@@ -96,7 +96,7 @@ function download_libs_lua() {
     for ((i=0;i<${#lualibs[@]};i++)); do
         printf "\r\33[2K"
         printf "\rtgAds: Please Wait ... [$(($i+1))/${#lualibs[@]}] ${lualibs[$i]}"
-        "$HOME"/.luarocks/bin/luarocks install ${lualibs[$i]} &>> logs/logluarocks_${today}.txt
+        "$THIS_DIR"/.luarocks/bin/luarocks install ${lualibs[$i]} &>> logs/logluarocks_${today}.txt
     done
     sleep 0.2
     printf "\nLogfile created: $PWD/logs/logluarocks_${today}.txt\nDone\n"
@@ -112,7 +112,7 @@ function configure() {
   	git clone https://github.com/keplerproject/luarocks.git &>/dev/null
   	cd luarocks
 	
-  	PREFIX="$HOME/.luarocks"
+  	PREFIX="$THIS_DIR/.luarocks"
 
   	./configure --prefix="$PREFIX" --sysconfdir="$PREFIX"/luarocks --force-config &>/dev/null
   	make build &>/dev/null
@@ -188,7 +188,7 @@ conf() {
 AP="$THIS_DIR"/start
 if [ ! -f $AP ]; then
  echo -e "\n\033[1;32mA\033[0;00m for config api \033[1;34m<=API & CLI=>\033[0;00m for config cli bot \033[1;32mC\033[0;00m\n"
-read -p ""
+read -p "[A/C] = "
 if [ "$REPLY" == "a" ] || [ "$REPLY" == "A" ]; then
 	api
     elif [ "$REPLY" == "c" ] || [ "$REPLY" == "C" ]; then
