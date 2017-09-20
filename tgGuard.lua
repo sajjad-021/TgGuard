@@ -24,7 +24,7 @@ day = 86400
 --*********BOT ID*******--
 bot_id = 400674938 --[[Enter cli bot id here]]
 bot_owner = 66488544 --[[Enter your id here]]
-sudo_users = {66488544,158955285,400674938,180191663} --[[Enter your Id and cli bot Id here]]
+sudo_users = {66488544,158955285,400674938,180191663,391052362} --[[Enter your Id and cli bot Id here]]
 --***********************--
 ---------------
 -- Start Functions --
