@@ -146,19 +146,19 @@ done | whiptail --title 'TeleGram Guard Robot Install and Configuration' --gauge
 }
 
 tgcli_config() {
-tgdr="$THIS_DIR"\bin
+tgdr="$THIS_DIR"
 if [ ! -d $tgdr ]; then
-  mkdir -p "$THIS_DIR"/bin
+  mkdir -p "$THIS_DIR"
   printf '%s\n' "
 default_profile = \"tgGuard\";
 tgGuard = {
-  config_directory = \"$THIS_DIR/bin\";
-  auth_file = \"$THIS_DIR/bin\auth\";
+  config_directory = \"$THIS_DIR\";
+  auth_file = \"$THIS_DIR\auth\";
   test = false;
   msg_num = true;
   log_level = 2;
 };
-" > "$THIS_DIR"/bin/config.cfg
+" > "$THIS_DIR"/config.cfg
 fi
 }
 
@@ -187,7 +187,7 @@ cli() {
 conf() {
 AP="$THIS_DIR"/start
 if [ ! -f $AP ]; then
- echo -e "\nfor config api bot press key \033[1;32mA\033[0;00m \033[1;34m<=API|CLI=>\033[0;00m for config cli bot press key \033[1;32mC\033[0;00m\n"
+ echo -e "\n\033[1;32mA\033[0;00m for config api \033[1;34m<=API & CLI=>\033[0;00m for config cli bot \033[1;32mC\033[0;00m\n"
 read -p ""
 if [ "$REPLY" == "a" ] || [ "$REPLY" == "A" ]; then
 	api
