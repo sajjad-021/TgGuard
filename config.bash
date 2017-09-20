@@ -199,7 +199,7 @@ if [ ! -f "telegram-cli" ]; then
 	wget "https://valtman.name/files/telegram-cli-1222" &>/dev/null
 	rm -rd logs
 	mv telegram-cli-1222 telegram-cli; chmod +x telegram-cli
+	conf
 else
- 	conf
 	start
 fi
