@@ -162,11 +162,7 @@ tgGuard = {
 fi
 }
 
-conf() {
-AP="$THIS_DIR"/start
-if [ ! -f $AP ]; then
- read -p "\n\033[1;33mDo you want api config?  [y/n]\n\033[0;00m\n\033[6;48m\n"
-	if [ "$REPLY" == "y" ] || [ "$REPLY" == "Y" ]; then
+api() {
 	 echo -e "\n\033[38;5;27mPut your Token\n\033[38;5;208m\n\033[6;48m\n"
 read -rp '' TKN
  echo "#!/bin/bash
@@ -176,7 +172,9 @@ read -rp '' TKN
         	sudo tmux detach -s tgGuard
 	done" >> start
 	chmod +x start
-    elif [ "$REPLY" == "n" ] || [ "$REPLY" == "N" ]; then
+}
+
+cli() {
     echo "#!/bin/bash
      while true; do
        sudo tmux kill-session -t tgGuard
@@ -184,6 +182,17 @@ read -rp '' TKN
         sudo tmux detach -s tgGuard
 	done" >> start
 	chmod +x start
+}
+
+conf() {
+AP="$THIS_DIR"/start
+if [ ! -f $AP ]; then
+ echo -e "\nfor config api bot press key \033[1;32mA\033[0;00m \033[1;34m<=API|CLI=>\033[0;00m for config cli bot press key \033[1;32mC\033[0;00m\n"
+read -p ""
+if [ "$REPLY" == "a" ] || [ "$REPLY" == "A" ]; then
+	api
+    elif [ "$REPLY" == "c" ] || [ "$REPLY" == "C" ]; then
+	cli
 fi
 }
 
