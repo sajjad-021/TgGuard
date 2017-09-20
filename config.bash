@@ -145,30 +145,13 @@ for i in $(seq 1 100); do
 done | whiptail --title 'TeleGram Guard Robot Install and Configuration' --gauge "${pkg[0]}" 6 60 0
 }
 
-tgcli_config() {
-tgdr="$THIS_DIR"
-if [ ! -d $tgdr ]; then
-  mkdir -p "$THIS_DIR"
-  printf '%s\n' "
-default_profile = \"tgGuard\";
-tgGuard = {
-  config_directory = \"$THIS_DIR\";
-  auth_file = \"$THIS_DIR\auth\";
-  test = false;
-  msg_num = true;
-  log_level = 2;
-};
-" > "$THIS_DIR"/config.cfg
-fi
-}
-
 api() {
 	 echo -e "\n\033[38;5;27mPut your Token\n\033[38;5;208m\n\033[6;48m\n"
 read -rp '' TKN
  echo "#!/bin/bash
 	while true; do
        		sudo tmux kill-session -t tgGuard
-			sudo tmux new-session -s tgGuard './telegram-cli --disable-link-preview -R -C -v -s tgGuard.lua -I -l 1 -E -c config.cfg -p tgGuard --bot=$TKN -L Log-api.txt &>/dev/null'
+			sudo tmux new-session -s tgGuard './telegram-cli --disable-link-preview -R -C -v -s tgGuard.lua -I -l 1 -E -p tgGuard --bot=$TKN -L Log-api.txt &>/dev/null'
         	sudo tmux detach -s tgGuard
 	done" >> start
 	chmod +x start
@@ -178,7 +161,7 @@ cli() {
     echo "#!/bin/bash
      while true; do
        sudo tmux kill-session -t tgGuard
-		sudo tmux new-session -s tgGuard ./telegram-cli --disable-link-preview -R -C -v -s tgGuard.lua -I -l 1 -E -c config.cfg -p tgGuard -L log.txt &>/dev/null'
+		sudo tmux new-session -s tgGuard ./telegram-cli --disable-link-preview -R -C -v -s tgGuard.lua -I -l 1 -E -p tgGuard -L log.txt &>/dev/null'
         sudo tmux detach -s tgGuard
 	done" >> start
 	chmod +x start
@@ -216,8 +199,8 @@ if [ ! -f "telegram-cli" ]; then
 	wget "https://valtman.name/files/telegram-cli-1222" &>/dev/null
 	rm -rd logs
 	mv telegram-cli-1222 telegram-cli; chmod +x telegram-cli
+else
 	tgcli_config
  	conf
-else
 	start
 fi
