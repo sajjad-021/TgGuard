@@ -200,7 +200,6 @@ if [ ! -f "telegram-cli" ]; then
 	rm -rd logs
 	mv telegram-cli-1222 telegram-cli; chmod +x telegram-cli
 else
-	tgcli_config
  	conf
 	start
 fi
