@@ -171,7 +171,6 @@ read -rp '' TKN
 			tmux new-session -s tgGuard './telegram-cli --disable-link-preview -R -C -s tgGuard.lua -p tgGuard --bot=$TKN -L log.txt'
         	tmux detach -s tgGuard
 	done" >> start
-	chmod +x start
 }
 
 cli() {
@@ -181,7 +180,6 @@ cli() {
 		sudo tmux new-session -s tgGuard './telegram-cli -W -R -C -v -s tgGuard.lua -p tgGuard -L log.txt'
         sudo tmux detach -s tgGuard
 	done" >> start
-	chmod +x start
 }
 
 conf() {
@@ -204,7 +202,7 @@ fi
 start() {
 COUNTER=0
   while [ $COUNTER -lt 5 ]; do
-	screen -S nohup ./start
+	screen -S nohup bash start
     sleep 1200
   done
 }
