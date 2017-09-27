@@ -34,8 +34,6 @@ function update() {
   sudo chmod +x TG
 }
 
-tgcli_version=1214
-
 lualibs=(
 'luasec'
 'socket'
@@ -59,32 +57,51 @@ lualibs=(
 'serpent'
 )
 
+basepkg="libreadline-dev libconfig-dev libssl-dev lua5.2 liblua5.2-dev libevent-dev libjansson* libpython-dev make autoconf unzip git redis-server g++"
+
 pkg=(
-'git'
-'wget'
-'openssl'
-'coreutils'
-'make'
-'gcc'
-'libreadline-dev'
-'libssl-dev'
-'redis-server'
-'libssl-dev'
-'unzip'
-'libexpat1-dev'
 'libconfig-dev'
-'tmux'
+'libjansson-dev'
+'libpcre3-dev'
+'libevent-dev'
+'libconfig-dev'
+'luarocks'
 'lua5.2'
 'liblua5.2-dev'
+'redis-server'
+'libssl-dev'
+'libreadline-dev'
+'libpython-dev'
+'libexpat1-dev'
+'git'
+'wget'
+'unzip'
+'make'
+'autoconf'
+'c++'
+'g++'
+'tmux'
+'openssl'
+'coreutils'
+'g++4.7'
+'c++4.7'
+'lua5.2'
+'liblua5.2-dev'
+'fortune-mod'
+'fortunes'
+'libc6'
+'libpcre3-dev'
+'libconfig-dev'
+'libssl-dev'
+'libreadline-dev'
+'libconfig-dev'
+'libevent-dev'
+'libjansson-dev'
+'libpython-dev'
+'libexpat1-dev'
 'lua-socket'
 'lua-sec'
 'lua-expat'
-'libevent-dev'
-'autoconf'
-'g++'
-'libjansson-dev'
-'expat'
-'luarocksv'
 )
 
 today=`date +%F`
@@ -95,7 +112,7 @@ function download_libs_lua() {
     local i
     for ((i=0;i<${#lualibs[@]};i++)); do
         printf "\r\33[2K"
-        printf "\rtgAds: Please Wait ... [$(($i+1))/${#lualibs[@]}] ${lualibs[$i]}"
+        printf "\rtgMember: Please Wait ... [$(($i+1))/${#lualibs[@]}] ${lualibs[$i]}"
         "$THIS_DIR"/.luarocks/bin/luarocks install ${lualibs[$i]} &>> logs/logluarocks_${today}.txt
     done
     sleep 0.2
@@ -118,8 +135,8 @@ function configure() {
   	make build &>/dev/null
 	sudo make install &>/dev/null
 	make bootstrap &>/dev/null
-		cd ..
-		rm -rf luarocks
+	cd ..
+	rm -rf luarocks
     if [[ ${1} != "--no-download" ]]; then
         download_libs_lua
     fi
@@ -132,8 +149,8 @@ function configure() {
 
 function installation() {
 for i in $(seq 1 100); do  
-    sleep 0.1
-    sudo apt-get -y install $pkg &>/dev/null
+    sleep 0.05
+    sudo apt-get install $basepkg  -y --force-yes &>/dev/null
     if [ $i -eq 100 ]; then
         echo -e "XXX\n100\nDone!\nXXX"
     elif [ $(($i % 4)) -eq 0 ]; then
@@ -150,9 +167,9 @@ api() {
 read -rp '' TKN
  echo "#!/bin/bash
 	while true; do
-       		sudo tmux kill-session -t tgGuard
-			sudo tmux new-session -s tgGuard './telegram-cli --disable-link-preview -R -C -v -s tgGuard.lua -I -l 1 -E -p tgGuard --bot=$TKN -L Log-api.txt &>/dev/null'
-        	sudo tmux detach -s tgGuard
+       		tmux kill-session -t tgGuard
+			tmux new-session -s tgGuard './telegram-cli --disable-link-preview -R -C -s tgGuard.lua -p tgGuard --bot=$TKN -L log.txt'
+        	tmux detach -s tgGuard
 	done" >> start
 	chmod +x start
 }
@@ -161,7 +178,7 @@ cli() {
     echo "#!/bin/bash
      while true; do
        sudo tmux kill-session -t tgGuard
-		sudo tmux new-session -s tgGuard ./telegram-cli --disable-link-preview -R -C -v -s tgGuard.lua -I -l 1 -E -p tgGuard -L log.txt &>/dev/null'
+		sudo tmux new-session -s tgGuard './telegram-cli -W -R -C -v -s tgGuard.lua -p tgGuard -L log.txt'
         sudo tmux detach -s tgGuard
 	done" >> start
 	chmod +x start
@@ -185,14 +202,18 @@ update
 fi
 
 start() {
-while true; do
+COUNTER=0
+  while [ $COUNTER -lt 5 ]; do
 	screen -S nohup ./start
-done
+    sleep 1200
+  done
 }
 
 if [ ! -f "telegram-cli" ]; then
   	chmod 777 config.bash
 	logo
+	dpkg -a --configure
+	sudo apt-get -y update &>/dev/null; sudo apt-get upgrade -y --force-yes &>/dev/null; sudo apt-get dist-upgrade -y --force-yes &>/dev/null; sudo apt-get -y install f &>/dev/null
 	installation
 	rm -rf README.md
  	configure
