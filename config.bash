@@ -148,18 +148,19 @@ function configure() {
 }
 
 function installation() {
-for i in $(seq 1 100); do  
-    sleep 0.05
-    sudo apt-get install $basepkg  -y --force-yes &>/dev/null
+    local i
+    for ((i=0;i<${#pkg[@]};i++)); do
+        sudo apt-get install ${pkg[$i]} -y --force-yes &>> .install-log${today}.txt
+    sleep 0.25
     if [ $i -eq 100 ]; then
-        echo -e "XXX\n100\nDone!\nXXX"
-    elif [ $(($i % 4)) -eq 0 ]; then
+        echo -e "XXX\n100\nInstall Luarocks and Download Libs\nXXX"
+    elif [ $(($i % 1)) -eq 0 ]; then
         let "is = $i / 4"
         echo -e "XXX\n$i\n${pkg[is]}\nXXX"
     else
         echo $i
     fi 
-done | whiptail --title 'TeleGram Guard Robot Install and Configuration' --gauge "${pkg[0]}" 6 60 0
+done | whiptail --title 'TeleGram Advertising bot Install and Configuration' --gauge "${pkg[0]}" 6 60 0
 }
 
 api() {
