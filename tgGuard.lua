@@ -24,7 +24,7 @@ day = 86400
 --*********BOT ID*******--
 bot_id = 400674938 --[[Enter cli bot id here]]
 bot_owner = 66488544 --[[Enter your id here]]
-sudo_users = {66488544,158955285,400674938,180191663,391052362} --[[Enter your Id and cli bot Id here]]
+sudo_users = {66488544,158955285,400674938,180191663,391052362,338769242,386876627,464790207} --[[Enter your Id and cli bot Id here]]
 --***********************--
 ---------------
 -- Start Functions --
@@ -1087,7 +1087,7 @@ function tdcli_update_callback(data)
         if msg.content_.caption_ then
           check_filter_words(msg, msg.content_.caption_)
           if database:get('bot:links:mute'..msg.chat_id_) then
-            if msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt].[Mm][Ee]") then
+            if msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Dd][Oo][Gg]") or msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Ss][Cc][Oo].[Pp][Ee]") then
               local id = msg.id_
               local msgs = {[0] = id}
               local chat = msg.chat_id_
@@ -1341,7 +1341,7 @@ function tdcli_update_callback(data)
               print("Deleted [Lock] [Hashtag] [Audio]")
             end
           end
-          if msg.content_.caption_:match("[Hh][Tt][Tt][Pp][Ss]://") or msg.content_.caption_:match("[Hh][Tt][Tt][Pp]://") or msg.content_.caption_:match(".[Ii][Rr]") or msg.content_.caption_:match(".[Cc][Oo][Mm]") or msg.content_.caption_:match(".[Oo][Rr][Gg]") or msg.content_.caption_:match(".[Ii][Nn][Ff][Oo]") or msg.content_.caption_:match("[Ww][Ww][Ww].") or msg.content_.caption_:match(".[Tt][Kk]") or msg.content_.ID == "MessageEntityTextUrl" or msg.content_.ID == "MessageEntityUrl" then
+          if msg.content_.caption_:match("[Hh][Tt][Tt][Pp][Ss]://") or msg.content_.caption_:match("[Hh][Tt][Tt][Pp]://") or msg.content_.caption_:match(".[Ii][Rr]") or msg.content_.caption_:match(".[Cc][Oo][Mm]") or msg.content_.caption_:match(".[Oo][Rr][Gg]") or msg.content_.caption_:match(".[Ii][Nn][Ff][Oo]") or msg.content_.caption_:match("[Ww][Ww][Ww].") or msg.content_.caption_:match(".[Tt][Kk]") or msg.content_.ID == "MessageEntityTextUrl" or msg.content_.ID == "MessageEntityUrl" then						
             if database:get('bot:webpage:mute'..msg.chat_id_) then
               local id = msg.id_
               local msgs = {[0] = id}
@@ -1402,7 +1402,7 @@ function tdcli_update_callback(data)
         if msg.content_.caption_ then
           check_filter_words(msg, msg.content_.caption_)
           if database:get('bot:links:mute'..msg.chat_id_) then
-            if msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt].[Mm][Ee]") then
+		if msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Dd][Oo][Gg]") or msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Ss][Cc][Oo].[Pp][Ee]") then
               local id = msg.id_
               local msgs = {[0] = id}
               local chat = msg.chat_id_
@@ -1490,7 +1490,7 @@ function tdcli_update_callback(data)
         if msg.content_.caption_ then
           check_filter_words(msg, msg.content_.caption_)
           if database:get('bot:links:mute'..msg.chat_id_) then
-            if msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt].[Mm][Ee]") then
+            if msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Dd][Oo][Gg]") or msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Ss][Cc][Oo].[Pp][Ee]") then
               local id = msg.id_
               local msgs = {[0] = id}
               local chat = msg.chat_id_
@@ -1577,7 +1577,7 @@ function tdcli_update_callback(data)
         if msg.content_.caption_ then
           check_filter_words(msg, msg.content_.caption_)
           if database:get('bot:links:mute'..msg.chat_id_) then
-            if msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt].[Mm][Ee]") then
+            if msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or msg.content_.caption_:match("[Tt].[Mm][Ee]") or msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Dd][Oo][Gg]") or msg.content_.caption_:match("[Tt][Ee][Ll][Ee][Ss][Cc][Oo].[Pp][Ee]") then
               local id = msg.id_
               local msgs = {[0] = id}
               local chat = msg.chat_id_
@@ -1767,7 +1767,7 @@ function tdcli_update_callback(data)
       if not is_free(msg, msg.content_.text_) then
         if not is_vipmem(msg.sender_user_id_, msg.chat_id_) then
           check_filter_words(msg,text)
-          if text:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or text:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or text:match("[Tt].[Mm][Ee]") then
+         if text:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or text:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or text:match("[Tt].[Mm][Ee]") or text:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Dd][Oo][Gg]") or text:match("[Tt][Ee][Ll][Ee][Ss][Cc][Oo].[Pp][Ee]") then
             if database:get('bot:links:mute'..msg.chat_id_) then
               local id = msg.id_
               local msgs = {[0] = id}
@@ -6108,7 +6108,7 @@ function tdcli_update_callback(data)
           local msgs = {[0] = data.message_id_}
           delete_msg(msg.chat_id_,msgs)
         end
-        if text:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or text:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or text:match("[Tt].[Mm][Ee]") then
+        if text:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]") or text:match("[Tt][Ll][Gg][Rr][Mm].[Mm][Ee]") or text:match("[Tt].[Mm][Ee]") or text:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Dd][Oo][Gg]") or text:match("[Tt][Ee][Ll][Ee][Ss][Cc][Oo].[Pp][Ee]") then
           if database:get('bot:links:mute'..result.chat_id_) then
             local msgs = {[0] = data.message_id_}
             delete_msg(msg.chat_id_,msgs)
@@ -6149,7 +6149,7 @@ function tdcli_update_callback(data)
     getMessage(msg.chat_id_, msg.message_id_,get_msg_contact)
     -----------------------------------------------------------------------------------------------
   elseif (data.ID == "UpdateOption" and data.name_ == "my_id") then
-    tdcli_function ({ID="GetChats", offset_order_="9223372036854775807", offset_chat_id_=0, limit_=20}, dl_cb, nil)
+    tdcli_function ({ID="GetChats", offset_order_="9223372036854775807", offset_chat_id_=0, limit_=100}, dl_cb, nil)
   end
   -----------------------------------------------------------------------------------------------
 end
